@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Number of Employees in Your Company? *\n\n\nThe Organisation I Represent Is A....? *\n\tEnd User (We Don't Sell Technology)\n\tTechnology Provider (We Sell Technology or Technology Services)\n\tInvestor\n\tAnalyst\n\tPress\n\tTrade Association\n\nWhich Day Will You Attend? *\n\tDay 1 - 10th May\n\tDay 2 - 11th May\n\tBoth\n\nWhich Theatre Are You Most Interested In Visiting? *\n\tVision Theatre\n\tMarketing, Entertainment and Consumer VR\n\tEnterprise, Education and Training\n\tDeveloper\n\nWhich technology is of most interest to you? *\n\tVirtual Reality\n\tAugmented Reality\n\tMixed Reality\n\tUnsure\n\nI Would Like To Learn More About The Following VR/AR/MR Opportunities At The Show: *\n\tThe Market Opportunity\n\tAugmented Reality Industry Tools\n\tVirtual Reality Industry Tools\n\tMixed Reality Industry Tools\n\tGaming\n\tSports and Live Events\n\tEducation\n\tIndustrial Training\n\tHealthcare and Medical\n\tTV and Entertainment\n\tAutomotive and Engineering\n\tAdvertising\n\tTourism and Hospitality\n\tGovernment and Cities\n\tReal Estate\n\tMilitary and Defence\n\tRetail\n\tManufacturing\n\tFinance\n\tEnterprise and Other Industrial Solutions\n\nHow Did You Hear About The Event? *\n\n",
+    "created" : 1486051698828.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2108682389",
+    "id" : "14F6D3A8",
+    "lastKnownWriteTime" : 1482338250,
+    "last_content_update" : 1482338250,
+    "path" : "~/Freelance/DataScience/MarkJohnstone/2017_VR/20161221_survey.txt",
+    "project_path" : "20161221_survey.txt",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "text"
+}

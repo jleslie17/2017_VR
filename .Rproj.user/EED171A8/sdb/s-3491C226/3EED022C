@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(lsa)\nlibrary(tidyverse)\n\npath <- getwd()\ndatadir <- paste(path, '/data/', sep = '')\ncodedir <- paste(path, '/code/', sep = '')\n\nsource(paste(codedir, 'AddUnderscores.R', sep = ''))\nsource(paste(codedir, 'SpreadResponses.R', sep = ''))\nsource(paste(codedir, 'GetMatches.R', sep = ''))\nsource(paste(codedir, 'CompanyMatchesOutput.R', sep = ''))\n\n# Load data\nData <- read.csv(\n  \"data/VR_Data_010217.csv\",\n  header = T,\n  na.strings = '')\nhead(Data)\n\nDataTib <- read_csv(\n  \"data/VR_Data_010217.csv\"\n)\nDataTib\n\nnames(DataTib)\nstr(DataTib)\n",
+    "created" : 1486050958318.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1149284621",
+    "id" : "3EED022C",
+    "lastKnownWriteTime" : 1486071517,
+    "last_content_update" : 1486071517660,
+    "path" : "~/Freelance/DataScience/MarkJohnstone/2017_VR/code/VR_2017.R",
+    "project_path" : "code/VR_2017.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
