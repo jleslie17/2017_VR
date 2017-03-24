@@ -1,26 +1,52 @@
 library(lsa)
 library(tidyverse)
 
-path <- getwd()
-datadir <- paste(path, '/data/', sep = '')
-codedir <- paste(path, '/code/', sep = '')
+path_to_scripts <- file.path("project/src")
+datadir <- file.path("/project/data")
+codedir <- file.path("/project/code")
+Rdir <- file.path("/project/R")
 
-source(paste(codedir, 'AddUnderscores.R', sep = ''))
-source(paste(codedir, 'SpreadResponses.R', sep = ''))
-source(paste(codedir, 'GetMatches.R', sep = ''))
-source(paste(codedir, 'CompanyMatchesOutput.R', sep = ''))
+source(file.path(path_to_scripts, "AddUnderscores.R"))
+source(file.path(path_to_scripts, "AddUnderscoresPipes.R"))
+source(file.path(path_to_scripts, "SpreadResponses.R"))
+source(file.path(path_to_scripts, "GetMatches.R"))
+source(file.path(path_to_scripts, "CompanyMatchesOutput.R"))
 
 # Load data
-Data <- read.csv(
-  "data/VR_Data_010217.csv",
+del_data <- read.csv(
+  "project/data/VR_Data_010217.csv",
   header = T,
   na.strings = '')
-head(Data)
+head(del_data)
 
-DataTib <- read_csv(
-  "data/VR_Data_010217.csv"
-)
-DataTib
+# del_tibble <- read_csv(
+#   "project/data/VR_Data_010217.csv"
+# )
 
-names(DataTib)
-str(DataTib)
+sponsor_data <- read.xlsx(paste(datadir, "Sponsor Intel 6 March.xlsx", sep = ''),
+                         sheetIndex = 1,
+                         header = T)
+# Clean data ====
+# Empty rows in del_data? No!
+nrow(del_data[rowSums(is.na(del_data)) == ncol(del_data),])
+# nrow(del_tibble[rowSums(is.na(del_tibble)) == ncol(del_tibble),])
+nrow(sponsor_data[rowSums(is.na(sponsor_data)) == ncol(sponsor_data),])
+
+targets <- del_data[, c(12:19)]
+users <- sponsor_data[, c(5:6)]
+
+# targets2 <- del_tibble %>% 
+#   select(c(12:19))
+
+# Put underscores between words, but not between answers
+targets <- AddUnderscoresPipes(targets)
+# Spread responses
+tarSpread <- SpreadResponses(targets)
+names(tarSpread)
+head(targets)
+
+head(users)
+users <- AddUnderscores(users)
+head(users)
+usersSpread <- SpreadResponses(users)
+names(usersSpread)

@@ -1,3 +1,4 @@
 data/
 *.txt
 !*/.gitkeep
+.Rproj.user
