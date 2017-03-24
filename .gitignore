@@ -2,3 +2,8 @@ data/
 *.txt
 !*/.gitkeep
 .Rproj.user/
+
+# History files
+.Rhistory
+.Rapp.history
+
