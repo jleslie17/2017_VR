@@ -43,6 +43,10 @@ identical(first, second)
 
 # Tests 
 query <- 21
+get_top_match(21, T, F)
+get_top_match(21, T, T)
 
-get_top_match()
+query <- 26
+get_top_match(26, T, T)
 
+names(users_spread)[!names(users_spread) %in% names(targets_spread)]

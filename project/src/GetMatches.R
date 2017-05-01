@@ -4,14 +4,12 @@
 # different, corresponding to different numbers of suitable matches per 
 # delegate.
 # 
-# It takes the arguments of L (the list generated from the matrix matching) and 
-# Data, which is the original dataset. Data should have the first four columns 
-# of: names(Data)[c(4:6, 8)] <- [1] "Title"      "First.Name" "Surname" 
-# "Company"
 # 
 # New version for VR_2917 takes three arguments: L (list generated from the 
 # matrix matching), delegate data and sponsor data. For sponsor data: 
 # > names(sponsor_data)[c(4,3)] gives [1] "Contact.name" "Company.name"
+# > names(delegate_data[c(3, 4, 23)]) gives [1] "First.Name" "Surname"    "Company" 
+# In new 30/04/17 data, want columns 4, 5, 8 from delegates data!!!!!!!!!!!!
 
 
 
@@ -37,7 +35,7 @@ GetMatches <- function(L, delegate_data, sponsor_data){
         names(DelegatesToMeet) <- Sponsors[,1]
         
         # Put the Delegates and affilations into a character vector
-        Delegates <- delegate_data[, c(3, 4, 23)]
+        Delegates <- delegate_data[, c(4, 5, 8)]
         DelegatesList <- character()
         for(i in 1:nrow(Delegates)){
                 DelegatesList[i] <- paste(Delegates[i,1], #removed title

@@ -20,26 +20,33 @@ see_matching_fields <- function() {
   print(cat(names(top_match_fields), sep = "\n"))
 }
 
-get_top_match <- function() {
+get_top_match <- function(query, show_25_matches = T, show_matrix = T) {
   query_info <- sponsor_data[query,]
-  print("Name of query: ")
-  print(query_info$Contact.name)
-  query_fields <- AddUnderscores(query_info) %>% 
+  cat("Name of query: ", as.character(query_info$Contact.name), "\n\n")
+
+  query_fields <- AddUnderscores(query_info) %>%
     SpreadResponses()
-  print("Table of cosine scores: ")
+
+  cat("Table of cosine scores: ")
   print(table(m[query,]))
   
   best_targets <- RankTargets_For_Testing(m[query,])
+  if(show_25_matches == T) {
+    cat("Best matches with scores: \n")
+    print(best_targets)
+  }
+
   top_target <- best_targets$target[1]
   target_25 <- best_targets$target[25]
-  print("Best matches with scores: ")
-  print(best_targets)
-  print("cosine distance for best match: ")
-  print(cosine(m_users[query,], m_targets[top_target,]))
-  print("cosine distance for 25th match: ")
-  print(cosine(m_users[query,], m_targets[target_25,]))
-  df <- data.frame(user = m_users[query,],
-                   top_target = m_targets[top_target,],
-                   target_25 = m_targets[target_25,])
-  print(df)
+  cat("\ncosine distance for best match: ", 
+      as.character(cosine(m_users[query,], m_targets[top_target,])), "\n\n")
+  cat("cosine distance for 25th match: ",
+      as.character(cosine(m_users[query,], m_targets[target_25,])), "\n\n")
+  
+  if(show_matrix == T) {
+    df <- data.frame(user = m_users[query,],
+                     top_target = m_targets[top_target,],
+                     target_25 = m_targets[target_25,])
+    print(df)
+  }
 }
