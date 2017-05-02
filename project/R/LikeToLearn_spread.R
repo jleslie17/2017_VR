@@ -55,8 +55,11 @@ head(targets_spread)
 # Export all in one sheet with names
 all_spread <- cbind(delegate_data$FirstName,
                     delegate_data$Surname,
+                    delegate_data$Job.Title,
+                    delegate_data$Company,
                     targets_spread)
-names(all_spread)[1:2] <- c("FirstName", "Surname")
+names(all_spread)[1:4] <- c("First Name", "Surname",
+                            "Job Title", "Company")
 head(all_spread)
 write.xlsx(all_spread,
            file = "project/figs/all_in_one_sheet.xlsx",
@@ -91,18 +94,18 @@ write.xlsx(all_spread,
 
 # Just names in tabs:
 wb <- createWorkbook()
-for (i in names(all_spread)[-c(1,2)]) {
+for (i in names(all_spread)[-c(1:4)]) {
   print(i)
   sheet <- createSheet(wb, i)
-  tempdf <- all_spread[,1:2]
+  tempdf <- all_spread[,1:4]
   tempdf <- cbind(tempdf, targets_spread[[i]])
-  tempdf <- tempdf[tempdf[,3] == 1, 1:2]
+  tempdf <- tempdf[tempdf[,5] == 1, 1:4]
   addDataFrame(tempdf,
                sheet = sheet,
                row.names = F,
                col.names = T)
 }
-saveWorkbook(wb, "project/figs/responses_on_tabs.xlsx")
+saveWorkbook(wb, "project/figs/responses_on_tabs_170502.xlsx")
 
 
 
