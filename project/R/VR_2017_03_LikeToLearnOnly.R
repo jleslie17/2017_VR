@@ -25,10 +25,10 @@ delegate_data <- read.csv(file.path(datadir, delegate_file),
 names(delegate_data)
 
 # remove duplicate rows
-delegate_data <- delegate_data[!duplicated(delegate_data),]
+# delegate_data <- delegate_data[!duplicated(delegate_data),]
 # rownames(delegate_data) <- 1:nrow(delegate_data)
 
-sponsor_file <- "New sponsors data 24.04.2017.xls"
+sponsor_file <- "sponsors intel.ods.xlsx"
 sponsor_data <- read.xlsx(file.path(datadir, sponsor_file),
                           sheetIndex = 1,
                           header = T)
@@ -40,6 +40,9 @@ nrow(delegate_data[rowSums(is.na(delegate_data)) == ncol(delegate_data),])
 delegate_data <- delegate_data[!rowSums(is.na(delegate_data)) == 
                                  ncol(delegate_data),]
 nrow(sponsor_data[rowSums(is.na(sponsor_data)) == ncol(sponsor_data),])
+sponsor_data <- sponsor_data[!rowSums(is.na(sponsor_data)) == 
+                               ncol(sponsor_data), ]
+
 
 names(delegate_data)[11:18]
 names(sponsor_data[, 5:10])
@@ -73,6 +76,7 @@ names(users_spread)[names(users_spread) == "Sports_&_Live_Events"] <-
 
 # Remove the columns that don't overlap ====
 names(users_spread)[!names(users_spread) %in% names(targets_spread)]
+
 users_tidy <- users_spread[,names(users_spread) %in% names(targets_spread)]
 targets_tidy <- targets_spread[,names(targets_spread) %in% names(users_tidy)]
 # rm(targets_spread, users_spread)
@@ -121,7 +125,7 @@ for (i in 1:length(names(Delegates_to_meet))) {
                row.names = F,
                col.names = T)
 }
-saveWorkbook(wb, "project/figs/test3.xlsx")
+saveWorkbook(wb, "project/figs/test4.xlsx")
 
 # Sys.Date()
 # output_name <- paste("project/figs/Matches_", Sys.Date(), ".xlsx", sep = '')

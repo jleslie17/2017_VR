@@ -49,6 +49,7 @@ get_top_match(21, T, T)
 query <- 26
 get_top_match(query = query, T, T)
 source("project/src/test_functions.R")
+query <- 4
 get_top_match_LikeToLearn(query = query, T, T)
 
 names(users_spread)[!names(users_spread) %in% names(targets_spread)]
