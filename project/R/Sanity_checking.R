@@ -42,11 +42,13 @@ second <- as.list(delegate_data[172,])
 identical(first, second)
 
 # Tests 
-query <- 21
+query <- 1
 get_top_match(21, T, F)
 get_top_match(21, T, T)
 
 query <- 26
-get_top_match(26, T, T)
+get_top_match(query = query, T, T)
+source("project/src/test_functions.R")
+get_top_match_LikeToLearn(query = query, T, T)
 
 names(users_spread)[!names(users_spread) %in% names(targets_spread)]

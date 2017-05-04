@@ -16,18 +16,12 @@ source(file.path(path_to_scripts, "CompanyMatchesOutput.R"))
 source(file.path(path_to_scripts, "Matrix_functions.R"))
 
 # Load data ====
-delegate_data_old <- read.csv(
-  "project/data/VR_Data_010217.csv",
-  header = T,
-  na.strings = '')
-
 delegate_file <- "NEW data delegates 27.04.2017.csv"
 delegate_data <- read.csv(file.path(datadir, delegate_file),
   header = T,
   na.strings = ''
 )
 
-names(delegate_data_old)
 names(delegate_data)
 
 # remove duplicate rows
@@ -45,17 +39,15 @@ names(sponsor_data)
 nrow(delegate_data[rowSums(is.na(delegate_data)) == ncol(delegate_data),])
 delegate_data <- delegate_data[!rowSums(is.na(delegate_data)) == 
                                  ncol(delegate_data),]
-# nrow(del_tibble[rowSums(is.na(del_tibble)) == ncol(del_tibble),])
 nrow(sponsor_data[rowSums(is.na(sponsor_data)) == ncol(sponsor_data),])
 
-names(delegate_data_old)[12:19]
 names(delegate_data)[11:18]
 names(sponsor_data[, 5:10])
 
-targets <- delegate_data[, c(11:18)]
-users <- sponsor_data[, 5:10]
+targets <- data.frame(delegate_data$Like.to.learn.)
+names(targets) <- "Like.to.learn"
 
-head(targets)
+users <- data.frame(sponsor_data$We.would.be.interested.in.meeting.attendees.who.requested.more.information.on.the.below)
 
 
 # Spread responses ====
@@ -71,39 +63,13 @@ names(targets_spread)
 names(users_spread)
 
 # Clean up screwy inconsistencies in responses ====
+names(targets_spread)[!names(targets_spread) %in% names(users_spread)]
 names(users_spread)[!names(users_spread) %in% names(targets_spread)]
-CombineSimilarColumns <- function(df, a, b){
-  # Takes entries from column b and puts them into col a, then removes
-  # col b. Use this when two columns have slightly different names but
-  # tell the same information.
-  df[[a]][df[[b]] == 1] <- 1
-  df <- df[, names(df) != b]
-  return(df)
-}
 
-a <- "Healthcare_and_Medical"
-b <- "Healthcare_&_Medical"
-table(users_spread[[a]])
-table(users_spread[[b]])
-users_spread <- CombineSimilarColumns(users_spread, a, b)
-table(users_spread[[a]])
-table(users_spread[[b]])
-names(users_spread)
-
-
-a <- "Sports_and_Live_Events"
-b <- "Sports_&_Live_Events"
-table(users_spread[[a]])
-table(users_spread[[b]])
-users_spread <- CombineSimilarColumns(users_spread, a, b)
-table(users_spread[[a]])
-table(users_spread[[b]])
-names(users_spread)
-
-names(users_spread)[names(users_spread) == "Videogames_"] <- "Videogames"
-names(users_spread)
-
-names(targets_spread)
+names(users_spread)[names(users_spread) == "Healthcare_&_Medical"] <- 
+  "Healthcare_and_Medical"
+names(users_spread)[names(users_spread) == "Sports_&_Live_Events"] <- 
+  "Sports_and_Live_Events"
 
 # Remove the columns that don't overlap ====
 names(users_spread)[!names(users_spread) %in% names(targets_spread)]
@@ -143,6 +109,33 @@ Delegates_to_meet <- GetMatches(L, delegate_data, sponsor_data)
 # as one \n-separated string in the fourth column.
 Matches <- GetCompanyMatchesOutput(delegate_data, sponsor_data, Delegates_to_meet)
 
-# write.xlsx(Matches,
-#   "project/figs/Matches_170503.xlsx",
-#   row.names = F)
+Delegates <- delegate_data[, c(4, 5, 7, 8, 10)]
+wb <- createWorkbook()
+for (i in 1:length(names(Delegates_to_meet))) {
+  print(i)
+  print(names(Delegates_to_meet)[i])
+  sheet <- createSheet(wb, names(Delegates_to_meet)[i])
+  tempdf <- Delegates[order(m[i,], decreasing = T), ]
+  addDataFrame(tempdf,
+               sheet = sheet,
+               row.names = F,
+               col.names = T)
+}
+saveWorkbook(wb, "project/figs/test3.xlsx")
+
+# Sys.Date()
+# output_name <- paste("project/figs/Matches_", Sys.Date(), ".xlsx", sep = '')
+# 
+# if (file.exists(output_name)) {
+#   x <- readline("File exists. Overwrite? (Y or N): ")
+#   if (x == "Y" | x == "y") {
+#     write.xlsx(Matches,
+#                output_name,
+#                row.names = F)
+#     
+#   }
+# }
+
+# Problem: targets that have all of the right items ticket PLUS other are
+# penalised compared to those that only have all of the right options ticked.
+

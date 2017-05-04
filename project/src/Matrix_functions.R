@@ -13,12 +13,12 @@ GetDistancesToTargets <- function(user, targets = m_targets, outcome = "") {
   return(distances)
 }
 
-RankTargets <- function(user) {
+RankTargets <- function(user, n = 25) {
   # Takes a user and returns a df of ranked similarities to targets
   tempDF <- data.frame(target = 1:length(user),
                        distance = user)
   # returns only the target ID in ranked order, not the score
   tempDF <- tempDF[order(tempDF[,2], decreasing = T),1]
-  return(tempDF[1:25]) # to trim it to 25 matches
+  return(tempDF[1:n]) # to trim it to 25 matches
 }
 
